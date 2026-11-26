@@ -1,0 +1,99 @@
+@import "tailwindcss";
+/* Noto Sans, bundled through Fontsource (OFL-1.1) so the app works offline. */
+@import "@fontsource-variable/noto-sans/wght.css";
+
+@theme {
+  --font-sans: "Noto Sans Variable", "Segoe UI", system-ui, sans-serif;
+}
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* "msfs": dark theme taken from the MSFS 2024 SDK docs (docs.flightsimulator.com) in
+   dark mode. Each colour notes where on that page it comes from. */
+@plugin "daisyui/theme" {
+  name: "msfs";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: #212121; /* page body */
+  --color-base-200: #1a1a1a; /* header / footer bars */
+  --color-base-300: #363636; /* selected sidebar item */
+  --color-base-content: #d0d0d0; /* body text */
+
+  --color-primary: #00b4ff; /* links, "On this page" underline */
+  --color-primary-content: #001824;
+  --color-secondary: #89d1ef; /* active sidebar text / visited link */
+  --color-secondary-content: #0b2430;
+  --color-accent: #ffac55; /* orange highlighted links */
+  --color-accent-content: #2a1600;
+  --color-neutral: #2d2d2d; /* inactive tab */
+  --color-neutral-content: #d0d0d0;
+
+  --color-info: #b3c7ff; /* --bs-link-color */
+  --color-info-content: #10183a;
+  --color-success: #84ee53; /* --bs-success */
+  --color-success-content: #102a04;
+  --color-warning: #eebd53; /* --bs-warning */
+  --color-warning-content: #2e2003;
+  --color-error: #ee5389; /* --bs-danger */
+  --color-error-content: #2f0614;
+
+  /* Docs use 6px controls and 10px panels, flat (no gradients/noise). */
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.625rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  /* Only <main> scrolls. "clip" (unlike "hidden") also stops scripts such as the
+     tour's scrollIntoView from scrolling the page and pushing the title bar away. */
+  overflow: clip;
+}
+
+/* daisyUI draws a focus outline offset outside the border, which reads as a double
+   ring. Use a single primary-coloured border instead. Unlayered, so it beats daisyUI's
+   component layer. */
+.input:focus,
+.input:focus-within,
+.select:focus,
+.select:focus-within,
+.textarea:focus,
+.textarea:focus-within {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+/* NextStep (the guided tour) wraps the app in two unstyled divs. Without a height
+   they break the full-height chain, <main> stops being the scroll container, and
+   nothing scrolls. */
+#root > div,
+#root > div > div:first-child {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Titles: bold Noto Sans. Base layer, so utilities on an element can override it. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  .card-title,
+  .stat-value {
+    font-weight: 700;
+  }
+}

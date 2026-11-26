@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2433"/>
+      <stop offset="1" stop-color="#0d121b"/>
+    </linearGradient>
+    <linearGradient id="fg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Terminal tile -->
+  <rect x="32" y="32" width="960" height="960" rx="216" fill="url(#bg)"/>
+  <rect x="32" y="32" width="960" height="960" rx="216" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="8"/>
+
+  <!-- Plane in place of the ">" prompt: top view, nose pointing right -->
+  <g transform="translate(104 263) scale(1.15)" fill="url(#fg)">
+    <!-- fuselage -->
+    <path d="M24 180 C24 162 40 152 62 152 L372 152 C420 152 456 164 476 180 C456 196 420 208 372 208 L62 208 C40 208 24 198 24 180 Z"/>
+    <!-- wings, swept back -->
+    <path d="M308 160 L176 6 L116 6 L192 160 Z"/>
+    <path d="M308 200 L176 354 L116 354 L192 200 Z"/>
+    <!-- tailplanes -->
+    <path d="M110 160 L54 82 L12 82 L42 160 Z"/>
+    <path d="M110 200 L54 278 L12 278 L42 200 Z"/>
+  </g>
+
+  <!-- "_" cursor -->
+  <rect x="656" y="652" width="232" height="76" rx="20" fill="url(#fg)"/>
+</svg>

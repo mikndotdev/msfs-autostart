@@ -1,0 +1,44 @@
+name: "publish"
+
+# Builds the Windows installer (NSIS) and attaches it to a draft GitHub release.
+# Runs on every push to master, or manually from the Actions tab.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write # create the release and upload the installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: setup bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: install frontend dependencies
+        # The frontend itself is built by tauri.conf.json's beforeBuildCommand (`bun run build`).
+        run: bun install --frozen-lockfile
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__ # replaced with the version from tauri.conf.json
+          releaseName: "MSFS Autostart v__VERSION__"
+          releaseBody: "Download and run the `MSFS Autostart_*_x64-setup.exe` installer below."
+          releaseDraft: true
+          prerelease: false
